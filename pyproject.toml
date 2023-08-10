@@ -12,6 +12,9 @@ django = "^4.2.4"
 loguru = "^0.7.0"
 isort = "^5.12.0"
 python-dotenv = "^1.0.0"
+djangorestframework = "^3.14.0"
+mixer = "^7.2.2"
+django-filter = "^23.2"
 
 
 [build-system]
