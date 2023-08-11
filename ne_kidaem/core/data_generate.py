@@ -1,6 +1,9 @@
-from django.contrib.auth.models import User
 from loguru import logger
 from mixer.backend.django import mixer
+
+from django.contrib.auth.models import User
+
+from blog.models import Post
 
 
 def create_users():
@@ -11,4 +14,16 @@ def create_users():
         user = User(username=username, email=email)
         user.set_password(password)
         user.save()
-        logger.info("User {user.username} created")
+        logger.info(f"User {user.username} created")
+
+
+def create_posts():
+    users = User.objects.all()
+    for user in users:
+        for _ in range(10):
+            title = mixer.faker.sentence()
+            text = mixer.faker.text()
+            created_at = mixer.faker.date_time_this_year()
+            post = Post(title=title, text=text, created_at=created_at, author=user)
+            post.save()
+            logger.info(f"Post '{post.title}' created for user '{user.username}'")

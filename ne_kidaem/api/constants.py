@@ -1,0 +1,5 @@
+ERROR_SUBSCRIBE_SELF = "You cannot subscribe to yourself"
+ERROR_ALREADY_SUBSCRIBED = "You are already subscribed to this user"
+ERROR_NOT_SUBSCRIBED = "Subscribed successfully"
+ERROR_ALREADY_READ = "Post already read"
+POST_IS_READ = "Post marked as read"

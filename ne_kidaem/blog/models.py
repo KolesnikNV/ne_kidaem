@@ -42,3 +42,11 @@ class Subscription(models.Model):
     class Meta:
         verbose_name = _("Subscription")
         verbose_name_plural = _("Subscriptions")
+
+
+class ReadPost(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="read_posts")
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ("user", "post")
