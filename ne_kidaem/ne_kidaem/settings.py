@@ -10,7 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
-DEBUG = os.getenv("DEBUG").lower() == "true"
+DEBUG = True
 ALLOWED_HOSTS = []
 
 if os.getenv("ALLOWED_HOSTS"):
@@ -77,14 +77,17 @@ WSGI_APPLICATION = "ne_kidaem.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("POSTGRES_DB"),
-        "USER": os.getenv("POSTGRES_USER"),
-        "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
-        "HOST": os.getenv("HOST"),
-        "PORT": os.getenv("PORT"),
+        "NAME": os.getenv("PG_NAME"),
+        "USER": os.getenv("PG_USER"),
+        "PASSWORD": os.getenv("PG_PASSWORD"),
+        "HOST": "db",
+        "PORT": 5432,
+        "TEST": {
+            "MIRROR": "default",
+        },
     }
 }
-os.getenv("")
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
