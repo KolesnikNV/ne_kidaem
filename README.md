@@ -1,3 +1,9 @@
+![Python](https://img.shields.io/badge/Python-blue)
+![Django](https://img.shields.io/badge/Django-green)
+![Django Rest Framework](https://img.shields.io/badge/Django%20Rest%20Framework-orange)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-blueviolet)
+![Docker](https://img.shields.io/badge/Docker-blue)
+
 # Тестовое задание для ne_kidaem
 
 Этот проект реализует RESTful API для управления постами, подписками пользователей, лайками и прочитанными постами. Проект построен с использованием Django и Django REST framework.
@@ -15,18 +21,27 @@
 Клонируйте репозиторий проекта:
 
 ```git clone https://github.com/KolesnikNV/ne_kidaem.git```
+
 ```cd ne_kidaem```
 
 Создайте файл .env в корневой директории проекта и добавьте следующие переменные окружения:
 
 ```SECRET_KEY = "YOUR_SECRET_KEY"```
+
 ```CELERY_BROKER_URL = "YOUR_CELERY_BROKER_URL"```
+
 ```ALLOWED_HOSTS = ["YOUR", "ALLOWED", "HOSTS"]```
+
 ```PG_NAME = PG_NAME```
+
 ```PG_USER = PG_USER```
+
 ```PG_PASSWORD = PG_PASSWORD```
+
 ```PG_HOST = PG_HOST```
+
 ```PG_PORT = PG_PORT```
+
 
 Замените на соответствующие значения.
 
