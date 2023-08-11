@@ -12,6 +12,13 @@ django = "^4.2.4"
 loguru = "^0.7.0"
 isort = "^5.12.0"
 python-dotenv = "^1.0.0"
+djangorestframework = "^3.14.0"
+django-filter = "^23.2"
+celery = "^5.3.1"
+redis = "^4.6.0"
+psycopg2-binary = "^2.9.7"
+mixer = "^7.2.2"
+pytest = "^7.4.0"
 
 
 [build-system]
