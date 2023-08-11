@@ -2,36 +2,32 @@ from rest_framework import serializers
 
 from django.contrib.auth.models import User
 
-from blog.models import Post, ReadPost, Subscription
+from blog.models import LikePost, Post, ReadPost, Subscription
 
 
 class PostSerializer(serializers.ModelSerializer):
     author = serializers.ReadOnlyField(source="author.username")
     created_at = serializers.DateTimeField(format="%d-%m-%Y в %H:%M", read_only=True)
     is_read = serializers.SerializerMethodField()
+    is_like = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
-        fields = ["title", "text", "created_at", "author", "is_read"]
+        fields = ["id", "title", "text", "created_at", "author", "is_read", "is_like"]
 
     def get_is_read(self, obj):
         user = self.context["request"].user
         return ReadPost.objects.filter(user=user, post=obj).exists()
 
-
-class PostsForSubscribers(serializers.Serializer):
-    title = serializers.CharField()
-    text = serializers.CharField()
-    created_at = serializers.DateTimeField(format="%d-%m-%Y в %H:%M")
+    def get_is_like(self, obj):
+        user = self.context["request"].user
+        return LikePost.objects.filter(user=user, post=obj).exists()
 
 
-class SubscriptionSerializer(serializers.ModelSerializer):
-    posts = PostsForSubscribers(many=True, source="author.post_set")
-    author = serializers.ReadOnlyField(source="author.username")
-
+class PostsForSubscribers(serializers.ModelSerializer):
     class Meta:
-        model = Subscription
-        fields = ["author", "posts"]
+        model = Post
+        exclude = ["id", "author"]
 
 
 class UserSerializer(serializers.ModelSerializer):

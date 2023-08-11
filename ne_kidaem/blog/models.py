@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -44,9 +45,24 @@ class Subscription(models.Model):
         verbose_name_plural = _("Subscriptions")
 
 
-class ReadPost(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="read_posts")
+class BaseUserPostRelation(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
 
+    class Meta:
+        abstract = True
+
+    def validate_unique(self, *args, **kwargs):
+        super().validate_unique(*args, **kwargs)
+        if self.__class__.objects.filter(user=self.user, post=self.post).exists():
+            raise ValidationError("This user already has a relation with this post.")
+
+
+class ReadPost(BaseUserPostRelation):
+    class Meta:
+        unique_together = ("user", "post")
+
+
+class LikePost(BaseUserPostRelation):
     class Meta:
         unique_together = ("user", "post")

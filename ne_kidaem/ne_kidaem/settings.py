@@ -1,13 +1,21 @@
+import os
 from pathlib import Path
 
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "django-insecure-czsjmnav8dts#r9zrc3&1l^z75)mxts0j00o5yrhz5ech+rsr("
-
-DEBUG = True
-
+SECRET_KEY = os.getenv("SECRET_KEY")
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
+DEBUG = os.getenv("DEBUG").lower() == "true"
 ALLOWED_HOSTS = []
+
+if os.getenv("ALLOWED_HOSTS"):
+    ALLOWED_HOSTS = [host.strip() for host in os.getenv("ALLOWED_HOSTS").split(",")]
+
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -19,6 +27,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "django_filters",
+    "core",
     "api.apps.ApiConfig",
     "blog.apps.BlogConfig",
 ]
@@ -67,11 +76,15 @@ WSGI_APPLICATION = "ne_kidaem.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("POSTGRES_DB"),
+        "USER": os.getenv("POSTGRES_USER"),
+        "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
+        "HOST": os.getenv("HOST"),
+        "PORT": os.getenv("PORT"),
     }
 }
-
+os.getenv("")
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
@@ -96,7 +109,9 @@ USE_I18N = True
 
 USE_TZ = True
 
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
+STATIC_ROOT = "/static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

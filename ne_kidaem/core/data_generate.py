@@ -20,7 +20,7 @@ def create_users():
 def create_posts():
     users = User.objects.all()
     for user in users:
-        for _ in range(10):
+        for _ in range(100):
             title = mixer.faker.sentence()
             text = mixer.faker.text()
             created_at = mixer.faker.date_time_this_year()
